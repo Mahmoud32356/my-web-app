@@ -24,25 +24,25 @@ jobs:
       with:
         node-version: '18'
 
-    - name: Install Cordova
-      run: npm install -g cordova
-
-    - name: Setup Cordova Project
+    - name: Install Capacitor CLI & Build App
       run: |
-        cordova create cordova_app com.almadaah.app "Almadaah"
-        cd cordova_app
-        rm -rf www/*
-        cp ../index.html www/index.html
-        cordova platform add android@12.0.0
-        cordova plugin add cordova-plugin-admob-plus --variable APP_ID_ANDROID="ca-app-pub-7293684166978355~9579740993"
+        npm init -y
+        npm install @capacitor/core @capacitor/cli @capacitor/android
+        npx cap init Almadaah com.almadaah.app --web-dir .
+        npx cap add android
+        npx cap copy android
 
-    - name: Build Android APK
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v3
+
+    - name: Build APK with Gradle
       run: |
-        cd cordova_app
-        cordova build android --debug
+        cd android
+        chmod +x gradlew
+        ./gradlew assembleDebug --stacktrace
 
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
       with:
         name: Almadaah-App-APK
-        path: cordova_app/platforms/android/app/build/outputs/apk/debug/app-debug.apk
+        path: android/app/build/outputs/apk/debug/app-debug.apk
