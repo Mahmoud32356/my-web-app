@@ -1,0 +1,49 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+
+    - name: Install Cordova & Dependencies
+      run: |
+        npm install -g cordova
+        cordova create app com.almadaah.app "Almadaah"
+        cd app
+        rm -rf www/*
+        cp ../index.html www/
+
+    - name: Add Android Platform & AdMob Plugin
+      run: |
+        cd app
+        cordova platform add android
+        cordova plugin add cordova-plugin-admob-plus --variable APP_ID_ANDROID="ca-app-pub-7293684166978355~9579740993"
+
+    - name: Build APK
+      run: |
+        cd app
+        cordova build android --debug
+
+    - name: Upload APK Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: Almadaah-App-APK
+        path: app/platforms/android/app/build/outputs/apk/debug/app-debug.apk
