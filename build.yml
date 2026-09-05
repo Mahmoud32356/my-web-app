@@ -3,6 +3,7 @@ name: Build Android APK
 on:
   push:
     branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   build:
@@ -23,27 +24,25 @@ jobs:
       with:
         node-version: '18'
 
-    - name: Install Cordova & Dependencies
-      run: |
-        npm install -g cordova
-        cordova create app com.almadaah.app "Almadaah"
-        cd app
-        rm -rf www/*
-        cp ../index.html www/
+    - name: Install Cordova
+      run: npm install -g cordova
 
-    - name: Add Android Platform & AdMob Plugin
+    - name: Setup Cordova Project
       run: |
-        cd app
-        cordova platform add android
+        cordova create cordova_app com.almadaah.app "Almadaah"
+        cd cordova_app
+        rm -rf www/*
+        cp ../index.html www/index.html
+        cordova platform add android@12.0.0
         cordova plugin add cordova-plugin-admob-plus --variable APP_ID_ANDROID="ca-app-pub-7293684166978355~9579740993"
 
-    - name: Build APK
+    - name: Build Android APK
       run: |
-        cd app
+        cd cordova_app
         cordova build android --debug
 
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
       with:
         name: Almadaah-App-APK
-        path: app/platforms/android/app/build/outputs/apk/debug/app-debug.apk
+        path: cordova_app/platforms/android/app/build/outputs/apk/debug/app-debug.apk
