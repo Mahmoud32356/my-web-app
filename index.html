@@ -5,42 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>المدّاح</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body, html { width: 100%; height: 100%; overflow: hidden; background-color: #ffffff; }
-        iframe { width: 100%; height: 100%; border: none; }
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #ffffff;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
     </style>
-    <script src="cordova.js"></script>
 </head>
 <body>
-
     <iframe src="https://almadaah2026.blogspot.com"></iframe>
-
-    <script>
-        document.addEventListener('deviceready', onDeviceReady, false);
-
-        function onDeviceReady() {
-            if (typeof admob !== 'undefined') {
-                
-                // 1. إعلان الفتح (App Open)
-                admob.appOpen.config({
-                    adUnitId: 'ca-app-pub-7293684166978355/5313192926'
-                });
-                admob.appOpen.load().then(() => admob.appOpen.show());
-
-                // 2. إعلان البانر (Banner)
-                admob.banner.config({
-                    adUnitId: 'ca-app-pub-7293684166978355/6626274599',
-                    position: 'bottom'
-                });
-                admob.banner.prepare().then(() => admob.banner.show());
-
-                // 3. إعلان بيني (Interstitial) عند فتح التطبيق
-                admob.interstitial.config({
-                    adUnitId: 'ca-app-pub-7293684166978355/5050680493'
-                });
-                admob.interstitial.prepare().then(() => admob.interstitial.show());
-            }
-        }
-    </script>
 </body>
 </html>
