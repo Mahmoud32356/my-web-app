@@ -3,6 +3,7 @@ name: Build Android APK
 on:
   push:
     branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   build:
@@ -23,23 +24,21 @@ jobs:
       with:
         node-version: '18'
 
-    - name: Install Cordova & Dependencies
+    - name: Accept Android SDK Licenses
       run: |
-        npm install -g cordova
+        yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
+
+    - name: Install Cordova
+      run: npm install -g cordova
+
+    - name: Create and Build Cordova App
+      run: |
         cordova create app com.almadaah.app "Almadaah"
         cd app
         rm -rf www/*
-        cp ../index.html www/
-
-    - name: Add Android Platform & AdMob Plugin
-      run: |
-        cd app
-        cordova platform add android
-        cordova plugin add cordova-plugin-admob-plus --variable APP_ID_ANDROID="ca-app-pub-7293684166978355~9579740993"
-
-    - name: Build APK
-      run: |
-        cd app
+        cp ../index.html www/index.html
+        cordova platform add android@10.1.2
+        cordova plugin add cordova-plugin-admob-free --variable ADMOB_APP_ID="ca-app-pub-7293684166978355~9579740993"
         cordova build android --debug
 
     - name: Upload APK Artifact
