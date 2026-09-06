@@ -22,30 +22,25 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '20'
+        node-version: '18'
 
     - name: Accept Android SDK Licenses
       run: yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
 
-    - name: Build App with Capacitor
-      run: |
-        npm init -y
-        npm install @capacitor/core @capacitor/cli @capacitor/android
-        npx cap init Almadaah com.almadaah.app --web-dir .
-        npx cap add android
-        npx cap copy android
+    - name: Install Cordova CLI
+      run: npm install -g cordova@12.0.0
 
-    - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@v3
-
-    - name: Build Debug APK
+    - name: Create and Build Cordova App
       run: |
-        cd android
-        chmod +x gradlew
-        ./gradlew assembleDebug --stacktrace
+        cordova create app com.almadaah.app "Almadaah"
+        cd app
+        cp -r ../index.html www/index.html 2>/dev/null || true
+        cordova platform add android@12.0.0
+        cordova plugin add cordova-plugin-admob-free
+        cordova build android --debug
 
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
       with:
         name: Almadaah-App-APK
-        path: android/app/build/outputs/apk/debug/app-debug.apk
+        path: app/platforms/android/app/build/outputs/apk/debug/app-debug.apk
