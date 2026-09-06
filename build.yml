@@ -27,7 +27,7 @@ jobs:
     - name: Accept Android SDK Licenses
       run: yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
 
-    - name: Install Dependencies & Setup Capacitor
+    - name: Install Capacitor & Prepare Android Project
       run: |
         npm init -y
         npm install @capacitor/core @capacitor/cli @capacitor/android
