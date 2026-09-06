@@ -4,24 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>المدّاح</title>
-    <script>
-        window.location.href = "https://almadaah2026.blogspot.com";
-    </script>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #ffffff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            font-family: system-ui, -apple-system, sans-serif;
-            color: #333333;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
+    <script src="cordova.js"></script>
 </head>
 <body>
-    <p>جاري تحميل التطبيق...</p>
+    <!-- شاشة التحميل والشاشة عند انقطاع الإنترنت -->
+    <div id="offline-screen" class="screen">
+        <div class="loader-content">
+            <div class="spinner"></div>
+            <h2>مدونة المدّاح</h2>
+            <p id="status-text">جاري الاتصال بالشبكة...</p>
+            <button id="retry-btn" onclick="checkConnectionAndLoad()">إعادة المحاولة</button>
+        </div>
+    </div>
+
+    <!-- إطار عرض الموقع WebView -->
+    <iframe id="web-frame" src="about:blank"></iframe>
+
+    <script src="main.js"></script>
 </body>
 </html>
