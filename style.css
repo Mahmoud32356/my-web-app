@@ -1,0 +1,73 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #f4f4f7;
+    font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* الشاشة الخارجية عند قطع الاتصال */
+.screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    text-align: center;
+}
+
+.loader-content h2 {
+    color: #1a1a1a;
+    margin-bottom: 8px;
+}
+
+.loader-content p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.spinner {
+    width: 45px;
+    height: 45px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #007bff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 15px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+#retry-btn {
+    padding: 10px 24px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+/* إطار الـ WebView وتخصيص هامش لإعلان البنر */
+#web-frame {
+    width: 100%;
+    /* تخصيص مساحة 50px في الأسفل حتى لا يغطي إعلان البنر أزرار الموقع */
+    height: calc(100% - 50px);
+    border: none;
+    display: none;
+}
