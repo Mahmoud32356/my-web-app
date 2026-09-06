@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.almadaah.app" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>المدّاح</name>
+    <description>تطبيق مدونة المداح الرسمي</description>
+    <author email="support@almadaah2026.blogspot.com">Mahmoud Osman</author>
+    
+    <content src="index.html" />
+    <access origin="*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-navigation href="https://almadaah2026.blogspot.com/*" />
+
+    <platform name="android">
+        <preference name="AndroidXEnabled" value="true" />
+        <preference name="GradlePluginKotlinEnabled" value="true" />
+        
+        <!-- أذونات شبكة الإنترنت -->
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.INTERNET" />
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+        </config-file>
+
+        <!-- معرف تطبيق AdMob الخاص بك -->
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <meta-data
+                android:name="com.google.android.gms.ads.APPLICATION_ID"
+                android:value="ca-app-pub-7293684166978355~9579740993" />
+        </config-file>
+    </platform>
+
+    <!-- المكونات الإضافية المطلوبة -->
+    <plugin name="cordova-plugin-admob-plus" spec="^1.28.0" />
+    <plugin name="cordova-plugin-inappbrowser" spec="^5.0.0" />
+    <plugin name="cordova-plugin-network-information" spec="^3.0.0" />
+</widget>
