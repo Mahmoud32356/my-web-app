@@ -22,9 +22,12 @@ jobs:
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '18'
+        node-version: '20'
 
-    - name: Install Capacitor CLI & Build App
+    - name: Accept Android SDK Licenses
+      run: yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
+
+    - name: Install Dependencies & Setup Capacitor
       run: |
         npm init -y
         npm install @capacitor/core @capacitor/cli @capacitor/android
