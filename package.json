@@ -1,0 +1,29 @@
+{
+  "name": "com.almadaah.app",
+  "displayName": "المدّاح",
+  "version": "1.0.0",
+  "description": "تطبيق مدونة المداح الرسمي",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Mahmoud Osman",
+  "license": "ISC",
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-admob-plus": {},
+      "cordova-plugin-inappbrowser": {},
+      "cordova-plugin-network-information": {}
+    },
+    "platforms": [
+      "android"
+    ]
+  },
+  "dependencies": {
+    "cordova-android": "^12.0.0",
+    "cordova-plugin-admob-plus": "^1.28.0",
+    "cordova-plugin-inappbrowser": "^5.0.0",
+    "cordova-plugin-network-information": "^3.0.0"
+  }
+}
