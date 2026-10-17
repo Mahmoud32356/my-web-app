@@ -3,24 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>المدّاح</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="cordova.js"></script>
+    <title>تطبيق محمود عثمان</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #ffffff;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+        /* تصميم شاشة انقطاع الإنترنت */
+        #offline-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #f8f9fa;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: Tahoma, sans-serif;
+            text-align: center;
+            padding: 20px;
+            z-index: 9999;
+        }
+        #offline-screen h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        #offline-screen p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        #offline-screen button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-    <!-- شاشة التحميل والشاشة عند انقطاع الإنترنت -->
-    <div id="offline-screen" class="screen">
-        <div class="loader-content">
-            <div class="spinner"></div>
-            <h2>مدونة المدّاح</h2>
-            <p id="status-text">جاري الاتصال بالشبكة...</p>
-            <button id="retry-btn" onclick="checkConnectionAndLoad()">إعادة المحاولة</button>
-        </div>
+
+    <!-- عرض الموقع داخل الإطار (WebView افتراضي للويب) -->
+    <iframe id="site-frame" src="https://mahmoudasman.amwaly.com/" allow="camera; microphone; geolocation; payment"></iframe>
+
+    <!-- شاشة تنبيه في حال انقطاع الإنترنت -->
+    <div id="offline-screen">
+        <h2>لا يوجد اتصال بالإنترنت</h2>
+        <p>يرجى التحقق من اتصالك بالشبكة ثم المحاولة مرة أخرى.</p>
+        <button onclick="location.reload()">إعادة المحاولة</button>
     </div>
 
-    <!-- إطار عرض الموقع WebView -->
-    <iframe id="web-frame" src="about:blank"></iframe>
+    <script>
+        // التحقق من حالة الإنترنت
+        window.addEventListener('online',  updateOnlineStatus);
+        window.addEventListener('offline', updateOnlineStatus);
 
-    <script src="main.js"></script>
+        function updateOnlineStatus() {
+            const offlineScreen = document.getElementById('offline-screen');
+            if (!navigator.onLine) {
+                offlineScreen.style.display = 'flex';
+            } else {
+                offlineScreen.style.display = 'none';
+            }
+        }
+        
+        // التحقق عند فتح التطبيق أول مرة
+        updateOnlineStatus();
+    </script>
 </body>
 </html>
+
